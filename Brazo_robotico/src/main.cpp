@@ -7,6 +7,17 @@
 #define SERVOMIN 102
 #define SERVOMAX 512
 
+//declaracion angulos
+int angulo0=90; //rotacion base
+int angulo1=90; //subir-bajar
+int angulo2=90; //subir-bajar codo
+int angulo3=90; //rotacion mano
+int angulo4=90; //abrir-cerrar mano
+
+//variables para el control
+int servo=0; //numero de servo a controlar
+bool direcc=true; // true>aumentar, flase>disminuir
+
 // inicializacion servos
 Adafruit_PWMServoDriver pwm=Adafruit_PWMServoDriver();
 
@@ -46,6 +57,81 @@ void setPosition(int angulo, int servonum){
   double pulselenght;
   pulselenght = map(angulo, 0, 180, SERVOMIN, SERVOMAX);
   pwm.setPWM(servonum, 0, pulselenght);
+  delay(500); //para dar tiempo a los servos
+
+}
+
+
+//Respuesta al evento boton pulsado
+void b0PushCallback(void *ptr){
+  Serial.println("boton0 pulsado");
+  servo = 0;
+  angulo0++;
+  setPosition(angulo0, servo);
+
+}
+void b1PushCallback(void *ptr){
+  Serial.println("boton1 pulsado");
+  servo = 0;
+  angulo0 --;
+  setPosition(angulo0, servo);
+
+}
+void b2PushCallback(void *ptr){
+  Serial.println("boton2 pulsado");
+  servo = 1;
+  angulo0++;
+  setPosition(angulo1, servo);
+
+}
+
+void b3PushCallback(void *ptr){
+  Serial.println("boton3 pulsado");
+  servo = 1;
+  angulo0 --;
+  setPosition(angulo1, servo);
+
+}
+void b4PushCallback(void *ptr){
+  Serial.println("boton4 pulsado");
+  servo = 2;
+  angulo0++;
+  setPosition(angulo2, servo);
+
+}
+void b5PushCallback(void *ptr){
+  Serial.println("boton5 pulsado");
+  servo = 2;
+  angulo0 --;
+  setPosition(angulo2, servo);
+
+}
+void b6PushCallback(void *ptr){
+  Serial.println("boton6 pulsado");
+  servo = 3;
+  angulo0++;
+  setPosition(angulo3, servo);
+
+}
+void b7PushCallback(void *ptr){
+  Serial.println("boton7 pulsado");
+  servo = 3;
+  angulo0 --;
+  setPosition(angulo3, servo);
+
+}
+void b8PushCallback(void *ptr){
+  Serial.println("boton8 pulsado");
+  servo = 4;
+  angulo0++;
+  setPosition(angulo4, servo);
+
+}
+void b9PushCallback(void *ptr){
+  Serial.println("boton9 pulsado");
+  servo = 4;
+  angulo0 --;
+  setPosition(angulo4, servo);
 
 }
 
@@ -74,9 +160,4 @@ void setup() {
 void loop() {
   // bucle lectura pantalla
   nexLoop(nex_listen_list);
-}
-
-//Respuesta al evento boton pulsado
-void b0PushCallback(void *ptr){
-
 }
