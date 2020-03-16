@@ -16,7 +16,6 @@ int angulo4=90; //abrir-cerrar mano
 
 //variables para el control
 int servo=0; //numero de servo a controlar
-bool direcc=true; // true>aumentar, flase>disminuir
 
 // inicializacion servos
 Adafruit_PWMServoDriver pwm=Adafruit_PWMServoDriver();
@@ -57,85 +56,78 @@ void setPosition(int angulo, int servonum){
   double pulselenght;
   pulselenght = map(angulo, 0, 180, SERVOMIN, SERVOMAX);
   pwm.setPWM(servonum, 0, pulselenght);
-  delay(500); //para dar tiempo a los servos
+  //delay(500); //para dar tiempo a los servos
 
 }
 
 
 //Respuesta al evento boton pulsado
 void b0PushCallback(void *ptr){
-  Serial.println("boton0 pulsado");
   servo = 0;
-  angulo0++;
+  angulo0=angulo0+20;
   setPosition(angulo0, servo);
-
+  digitalWrite(13, HIGH);
 }
 void b1PushCallback(void *ptr){
-  Serial.println("boton1 pulsado");
   servo = 0;
-  angulo0 --;
+  angulo0= angulo0-20;
   setPosition(angulo0, servo);
+  digitalWrite(13, LOW);
 
 }
 void b2PushCallback(void *ptr){
-  Serial.println("boton2 pulsado");
   servo = 1;
-  angulo0++;
+  angulo1 = angulo1+5;
   setPosition(angulo1, servo);
 
 }
 
 void b3PushCallback(void *ptr){
-  Serial.println("boton3 pulsado");
   servo = 1;
-  angulo0 --;
+  angulo1 = angulo1-5;
   setPosition(angulo1, servo);
 
 }
 void b4PushCallback(void *ptr){
-  Serial.println("boton4 pulsado");
   servo = 2;
-  angulo0++;
+  angulo2=angulo2+5;
   setPosition(angulo2, servo);
 
 }
 void b5PushCallback(void *ptr){
-  Serial.println("boton5 pulsado");
   servo = 2;
-  angulo0 --;
+  angulo2=angulo2-5;
   setPosition(angulo2, servo);
 
 }
 void b6PushCallback(void *ptr){
-  Serial.println("boton6 pulsado");
   servo = 3;
-  angulo0++;
+  angulo3 = angulo3+5;
   setPosition(angulo3, servo);
 
 }
 void b7PushCallback(void *ptr){
-  Serial.println("boton7 pulsado");
   servo = 3;
-  angulo0 --;
+  angulo3=angulo3-5;
   setPosition(angulo3, servo);
 
 }
 void b8PushCallback(void *ptr){
-  Serial.println("boton8 pulsado");
   servo = 4;
-  angulo0++;
+  angulo4 = angulo4+5;
   setPosition(angulo4, servo);
 
 }
 void b9PushCallback(void *ptr){
-  Serial.println("boton9 pulsado");
   servo = 4;
-  angulo0 --;
+  angulo4=angulo4-5;
   setPosition(angulo4, servo);
 
 }
 
 void setup() {
+
+  pinMode(13, OUTPUT);
   //inicializacion pantalla
   nexInit();
   b0.attachPush(b0PushCallback, &b0);
@@ -153,8 +145,13 @@ void setup() {
   pwm.begin();
   pwm.setPWMFreq(50);
   //Inicializacion OK
-  Serial.begin(9600);
-  Serial.println("Inicio del programa");
+  setPosition(angulo0, 0);
+  setPosition(angulo1, 1);
+  setPosition(angulo2, 2);
+  setPosition(angulo3, 3);
+  setPosition(angulo4, 4);
+
+
 }
 
 void loop() {
