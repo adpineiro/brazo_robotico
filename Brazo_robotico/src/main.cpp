@@ -34,6 +34,12 @@ NexButton b6 =NexButton(0, 7, "b6");
 NexButton b7 =NexButton(0, 8, "b7");
 NexButton b8 =NexButton(0, 9, "b8");
 NexButton b9 =NexButton(0, 10, "b9");
+//NexNumber (pagina, componente, "nombre")
+NexText n0=NexText(1,7,"t5");
+NexText n1=NexText(1,8,"t6");
+NexText n2=NexText(1,9,"t7");
+NexText n3=NexText(1,10,"t8");
+NexText n4=NexText(1,11,"t9");
 
 char buffer[100]={0}; //buffer para leer los mensajes de la pantalla
 
@@ -60,19 +66,27 @@ void setPosition(int angulo, int servonum){
 
 }
 
+//actualizar posiciones en display
+void actualizar(){
+ n0.setText("angulo0");
+ n1.setText("angulo1");
+ n2.setText("angulo2");
+ n3.setText("angulo3");
+ n4.setText("angulo4");
+}
 
 //Respuesta al evento boton pulsado
 void b0PushCallback(void *ptr){
   servo = 0;
-  angulo0=angulo0+20;
+  angulo0=angulo0+5;
   setPosition(angulo0, servo);
-  digitalWrite(13, HIGH);
+  //digitalWrite(13, HIGH);
 }
 void b1PushCallback(void *ptr){
   servo = 0;
-  angulo0= angulo0-20;
+  angulo0= angulo0-5;
   setPosition(angulo0, servo);
-  digitalWrite(13, LOW);
+  //digitalWrite(13, LOW);
 
 }
 void b2PushCallback(void *ptr){
@@ -157,4 +171,5 @@ void setup() {
 void loop() {
   // bucle lectura pantalla
   nexLoop(nex_listen_list);
+  actualizar();
 }
